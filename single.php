@@ -13,12 +13,12 @@ get_header(); ?>
 					<h1><?php the_title(); ?></h1>
 					<h2>
                         <a href="#" class="tags"><?php the_category(' '); ?></a>&nbsp;&nbsp;/&nbsp;&nbsp;
-                        <span class="author">by <a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a></span>&nbsp;&nbsp;/&nbsp;&nbsp;
+                        <span class="author">by <a href="<?php echo get_author_posts_url( get_the_author_meta( get_the_ID() ) ); ?>"><?php the_author(); ?></a></span>&nbsp;&nbsp;/&nbsp;&nbsp;
                         <span class="date"><?php the_time('F jS, Y') ?></span>
 					</h2>
 					<div class="stats">
 						<div class="likes">15</div>
-						<div class="comments">7</div>
+						<div class="comments"><?php echo get_comments_number(); ?></div>
 					</div>
 				</div>
         <?php endif; ?>

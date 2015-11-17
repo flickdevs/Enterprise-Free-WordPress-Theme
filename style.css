@@ -1074,7 +1074,7 @@ header .middle {padding:53px 0px 47px;}
 .block_leave_comment_1 .textarea.errored {border-color:#ff0000;}
 .block_leave_comment_1 .textarea textarea {width:100%; height:170px; line-height:18px; display:block; overflow:auto; background-color:transparent; border:0px; font-family:'Open Sans', Helvetica, Arial, sans-serif; font-size:13px; color:#424242;}
 .block_leave_comment_1 .button {padding-top:21px; overflow:hidden;}
-.block_leave_comment_1 .button a {padding:0px; display:block;}
+.block_leave_comment_1 .button input[type=submit] {padding:0px; display:block; width: 100%; border: none}
 
 .block_leave_comment_1.type_1 .fields {margin-right:0px; float:none;}
 

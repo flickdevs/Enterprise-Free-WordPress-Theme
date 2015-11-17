@@ -14,7 +14,7 @@
     <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/layout/plugins/html5.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/layout/style.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/style.css" type="text/css">
 
     <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/layout/js/jquery.js"></script>
     <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/layout/js/plugins.js"></script>
