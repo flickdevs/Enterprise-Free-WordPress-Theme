@@ -21,21 +21,44 @@
 
 <div class="block_info_1 type_1">
     <!-- Tag cloud here -->
+    <div class="tags">
+        <div class="title"><span>Tags Cloud</span></div>
+
+        <?php
+        $args = array(
+            'smallest' => 8,
+            'largest' => 22,
+            'unit' => 'pt',
+            'number' => 45,
+            'format' => 'list',
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'link' => 'view',
+            'taxonomy' => 'post_tag',
+            'echo' => true
+        );
+        wp_tag_cloud($args);
+        ?>
+    </div>
+
 </div>
 
 <?php
 // Author bio.
-if ( is_single() && get_the_author_meta( 'description' ) ) :
-    get_template_part( 'author-bio' );
+if (is_single() && get_the_author_meta('description')) :
+    get_template_part('author-bio');
 endif;
 ?>
 
 <div class="line_1"></div>
 
 <!-- Alsolike widget -->
+<?php if (is_active_sidebar('bottom-post-sidebar')) : ?>
+    <?php dynamic_sidebar('bottom-post-sidebar'); ?>
+<?php endif; ?>
 <!-- Comment -->
 <?php
-if ( comments_open() || get_comments_number() ) :
+if (comments_open() || get_comments_number()) :
     comments_template();
 endif;
 ?>

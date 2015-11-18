@@ -37,7 +37,7 @@ if (post_password_required()) {
     // If comments are closed and there are comments, let's leave a little note, shall we?
     if (!comments_open() && get_comments_number() && post_type_supports(get_post_type(), 'comments')) :
         ?>
-        <p class="no-comments"><?php _e('Comments are closed.', 'twentyfifteen'); ?></p>
+        <p class="no-comments"><?php _e('Comments are closed.', 'enterprise'); ?></p>
     <?php endif; ?>
 
     <?php
@@ -61,8 +61,8 @@ if (post_password_required()) {
         'fields' => $fields
     );
 
-    //	enterprise_comment_form($comments_args);
-    comment_form($comments_args);
+    	enterprise_comment_form($comments_args);
+//    comment_form($comments_args);
     ?>
 </div>
 

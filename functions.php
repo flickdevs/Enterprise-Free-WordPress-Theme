@@ -1,4 +1,7 @@
 <?php
+include __DIR__ . '/libs/Mobile_Detect.php';
+
+
 function muhtah_setup()
 {
     register_nav_menus(array(
@@ -10,17 +13,54 @@ function muhtah_setup()
 
 add_action('after_setup_theme', 'muhtah_setup');
 
+function enterprise_inject_libraries() {
+    $detect = new Mobile_Detect;
+    $isMobile = $detect->isMobile();
+
+    if(!$isMobile) {
+    wp_enqueue_style( 'animation', get_template_directory_uri() . '/layout/plugins/cssanimation/animate.css', array(), null );
+    wp_enqueue_style( 'animation', get_template_directory_uri() . '/layout/plugins/cssanimation/delays.css', array(), null );
+    wp_enqueue_style( 'flexslider', get_template_directory_uri() . '/layout/plugins/flexslider/animation_delays.css', array(), null );
+    }
+
+    wp_enqueue_style( 'flexslider', get_template_directory_uri() . '/layout/plugins/flexslider/flexslider.css', array(), null );
+    wp_enqueue_script( 'flexslider', get_template_directory_uri() . '/layout/plugins/flexslider/jquery.flexslider-min.js', array(), null );
+
+    wp_enqueue_style( 'mediaelement', get_template_directory_uri() . '/layout/plugins/mediaelement/mediaelementplayer.css', array(), null );
+    wp_enqueue_script( 'mediaelement', get_template_directory_uri() . '/layout/plugins/mediaelement/mediaelement-and-player.min.js', array(), null );
+    wp_enqueue_script( 'mediaelement', get_template_directory_uri() . '/layout/plugins/mediaelement/custom.js', array(), null );
+
+
+    wp_enqueue_script( 'jquerytool', get_template_directory_uri() . '/layout/plugins/tools/jquery.tools.min.js', array(), null );
+
+    wp_enqueue_script( 'twitter', get_template_directory_uri() . '/layout/plugins/twitter/jquery.tweet.min.js', array(), null );
+
+    wp_enqueue_script( 'sort', get_template_directory_uri() . '/layout/plugins/sort/jquery.sort.min.js', array(), null );
+
+}
+add_action( 'wp_enqueue_scripts', 'enterprise_inject_libraries' );
+
 
 function muhtah_widgets_init()
 {
     register_sidebar(array(
-        'name' => __('Widget Area', 'muhtah'),
+        'name' => __('Right Sidebar', 'enterprise'),
         'id' => 'sidebar-1',
-        'description' => __('Add widgets here to appear in your sidebar.', 'twentyfifteen'),
+        'description' => __('Add widgets here to appear in your sidebar.', 'enterprise'),
         'before_widget' => '<aside>',
         'after_widget' => '</aside>',
         'before_title' => '<div class="sidebar_title_1-title">',
         'after_title' => '</div>',
+    ));
+
+    register_sidebar(array(
+        'name' => __('Bottom Post Sidebar', 'enterprise'),
+        'id' => 'bottom-post-sidebar',
+        'description' => __('Add widgets here to appear in your sidebar.', 'enterprise'),
+        'before_widget' => '<div class="block_also_like_1">',
+        'after_widget' => '</div>',
+        'before_title' => '',
+        'after_title' => '',
     ));
 }
 
@@ -209,6 +249,7 @@ function enterprise_comment_form($args = array(), $post_id = null)
                              */
                             do_action('comment_form_before_fields');
                             foreach ((array)$args['fields'] as $name => $field) {
+                                var_dump('NAYAYAYAYAYAYAYAY');
                                 /**
                                  * Filter a comment form field for display.
                                  *
@@ -318,12 +359,14 @@ function enterprise_comment_list($comment, $args, $depth)
 //    var_dump($comment);
 //    echo  '</pre>';
     echo
-        '<div class="comment" id="' . comment_ID() . '">
+        '<div class="comment" id="comment-' . get_comment_ID() . '">
 								<div class="inside">
 									<div class="avatar"><a href="' . get_comment_author_link() . '">' . get_avatar(get_comment_author_email()) . '</a></div>
 									<div class="content">
 										<div class="author"><a href="#">' . get_comment_author() . '</a></div>
-										<div class="info">' . get_comment_date() . '<a href="' . comment_reply_link(array_merge($args, array('depth' => $depth, 'max_depth' => $args['max_depth']))) . '">REPLY</a></div>
+										<div class="info">' . get_comment_date() .
+										get_comment_reply_link(array_merge($args, array('depth' => $depth, 'max_depth' => $args['max_depth']))) .
+										'</div>
 										<div class="text">' .
         get_comment_text() .
         '</div>
@@ -334,3 +377,117 @@ function enterprise_comment_list($comment, $args, $depth)
 							</div>';
 
 }
+
+/**
+ * Widget Class
+ */
+class Related_Post_Widget extends WP_Widget
+{
+
+    // widget constructor
+    public function __construct()
+    {
+        parent::__construct(
+            'related_post_widget',
+            __('Related Post Widget', 'enterprise'),
+            array(
+                'classname' => 'related_post_widget',
+                'description' => __('A slider show some related posts', 'enterprise')
+            )
+        );
+
+        load_plugin_textdomain('enterprise', false, basename(dirname(__FILE__)) . '/languages');
+
+    }
+
+    public function widget($args, $instance)
+    {
+        // outputs the content of the widget
+        extract($args);
+
+        $title = apply_filters('widget_title', $instance['title']);
+        $limit = $instance['limit'];
+
+        echo $before_widget;
+
+        ?>
+        <div class="title"><?php echo $title; ?></div>
+
+        <div id="slider" class="slider flexslider block_posts">
+							<ul class="slides">
+							<?php
+							 // get list posts limit by $limit and loop through this list
+							 ?>
+								<li>
+									<article class="post_type_4">
+										<div class="feature">
+											<div class="image">
+												<a href="blog_post.html"><img src="images/pic_also_like_1_1.jpg" alt=""><span class="hover"></span></a>
+											</div>
+										</div>
+
+										<div class="content">
+											<div class="info">
+												<div class="tags"><a href="#">LIFE</a></div>
+												<div class="date">27, 2013</div>
+												<div class="stats">
+													<div class="likes">15</div>
+													<div class="comments">7</div>
+												</div>
+											</div>
+
+											<div class="title">
+												<a href="blog_post.html">Quae ab illo inventore veritatis et quasi architecto.</a>
+											</div>
+										</div>
+									</article>
+								</li>
+							</ul>
+						</div>
+        </div>
+
+        <script type="text/javascript">
+            jQuery(function () {
+                init_slider_3('#slider');
+            });
+        </script>
+        </div>
+        <?php
+    }
+
+    public function form($instance)
+    {
+        // creates the back-end form
+        $title = esc_attr($instance['title']);
+        $limit = esc_attr($instance['limit']);
+        ?>
+        <p>
+            <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
+                   name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>"/>
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('limit'); ?>"><?php _e('Number of posts'); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('limit'); ?>"
+                   name="<?php echo $this->get_field_name('limit'); ?>" type="number" value="<?php echo $limit; ?>"/>
+        </p>
+        <?php
+    }
+
+    // Updating widget replacing old instances with new
+    public function update($new_instance, $old_instance)
+    {
+        // processes widget options on save
+        $instance = $old_instance;
+
+        $instance['title'] = strip_tags($new_instance['title']);
+        $instance['limit'] = intval($new_instance['limit']);
+
+        return $instance;
+    }
+
+}
+
+add_action('widgets_init', function () {
+    register_widget('Related_Post_Widget');
+});
